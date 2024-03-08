@@ -1,44 +1,34 @@
 #### Preamble ####
-# Purpose: Cleans the raw plane data recorded by two observers..... [...UPDATE THIS...]
-# Author: Rohan Alexander [...UPDATE THIS...]
-# Date: 6 April 2023 [...UPDATE THIS...]
-# Contact: rohan.alexander@utoronto.ca [...UPDATE THIS...]
-# License: MIT
-# Pre-requisites: [...UPDATE THIS...]
-# Any other information needed? [...UPDATE THIS...]
+# Purpose: Cleaning data on 2022 shelter usage
+# Author: Jerry Lu (Yen-Chia Lu), Sinan Ma and Che-Yu Wang
+# Email: Jerry33692@gmail.com, sinan.ma@mail.utoronto.ca, Cheyu.wang@mail.utoronto.ca
+# Date: 12, March 2024
 
 #### Workspace setup ####
+install.packages("opendatatoronto")
+install.packages("tidyverse")
+install.packages("janitor")
+
+library(opendatatoronto)
 library(tidyverse)
+library(janitor)
 
-#### Clean data ####
-raw_data <- read_csv("inputs/data/plane_data.csv")
+toronto_shelters_clean <-
+  clean_names(toronto_shelters) |>
+  mutate(occupancy_date = ymd(occupancy_date)) |> 
+  select(occupancy_date, 
+         occupied_beds,
+         occupied_rooms, 
+         location_city, 
+         sector, 
+         program_model,
+         service_user_count,
+         overnight_service_type)
 
-cleaned_data <-
-  raw_data |>
-  janitor::clean_names() |>
-  select(wing_width_mm, wing_length_mm, flying_time_sec_first_timer) |>
-  filter(wing_width_mm != "caw") |>
-  mutate(
-    flying_time_sec_first_timer = if_else(flying_time_sec_first_timer == "1,35",
-                                   "1.35",
-                                   flying_time_sec_first_timer)
-  ) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "490",
-                                 "49",
-                                 wing_width_mm)) |>
-  mutate(wing_width_mm = if_else(wing_width_mm == "6",
-                                 "60",
-                                 wing_width_mm)) |>
-  mutate(
-    wing_width_mm = as.numeric(wing_width_mm),
-    wing_length_mm = as.numeric(wing_length_mm),
-    flying_time_sec_first_timer = as.numeric(flying_time_sec_first_timer)
-  ) |>
-  rename(flying_time = flying_time_sec_first_timer,
-         width = wing_width_mm,
-         length = wing_length_mm
-         ) |> 
-  tidyr::drop_na()
+head(toronto_shelters_clean)
+View(toronto_shelters_clean)
 
-#### Save data ####
-write_csv(cleaned_data, "outputs/data/analysis_data.csv")
+write_csv(
+  x = toronto_shelters_clean,
+  file = "data/analysis_data/analysis_data.csv"
+)
