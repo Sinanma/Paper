@@ -6,11 +6,6 @@
 
 ####Workspace setup####
 library(tidyverse)
-install.packages("rstanarm")
-install.packages("Rcpp")
-install.packages("here")
-install.packages("readr")
-install.packages("dplyr")
 library(readr)
 library(here)
 library(Rcpp)
@@ -27,8 +22,8 @@ toronto_shelters <-
 
 toronto_shelters_data_first_model_rstanarm <-
   stan_glm(
-    formula = occupancy_rate_rooms ~ capacity_actual_room + service_user_count,
-    data = toronto_shelters_clean,
+    formula = capacity_actual_room ~ occupancy_rate_rooms + service_user_count,
+    data = toronto_shelters,
     family = gaussian(),
     prior = normal(location = 0, scale = 2.5),
     prior_intercept = normal(location = 0, scale = 2.5),
