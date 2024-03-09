@@ -6,14 +6,22 @@
 
 ####Workspace setup####
 library(tidyverse)
+install.packages("rstanarm")
+install.packages("Rcpp")
+install.packages("here")
+install.packages("readr")
+library(readr)
+library(here)
+library(Rcpp)
 library(rstanarm)
+
 
 #### read data ####
 toronto_shelters_clean <- read_csv("data/analysis_data/analysis_data.csv")
 #### model data ####
 toronto_shelters_data_first_model_rstanarm <-
   stan_glm(
-    formula = service_user_count ~ sector + location_city,
+    formula = occupancy_rate_rooms ~ capacity_actual_room + service_user_count,
     data = toronto_shelters_clean,
     family = gaussian(),
     prior = normal(location = 0, scale = 2.5),

@@ -23,6 +23,8 @@ toronto_shelters_clean <-
          sector, 
          program_model,
          service_user_count,
+         occupancy_rate_rooms,
+         capacity_actual_room,
          overnight_service_type)
 
 head(toronto_shelters_clean)
