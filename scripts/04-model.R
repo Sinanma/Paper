@@ -33,5 +33,5 @@ toronto_shelters_data_first_model_rstanarm <-
 #### save model ####
 saveRDS(
   toronto_shelters_data_first_model_rstanarm,
-  file = "models/toronto_shelters_data_first_model_rstanarm"
+  file = "models/shelters_data_model_one_rstanarm"
 )
