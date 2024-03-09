@@ -10,15 +10,21 @@ install.packages("rstanarm")
 install.packages("Rcpp")
 install.packages("here")
 install.packages("readr")
+install.packages("dplyr")
 library(readr)
 library(here)
 library(Rcpp)
 library(rstanarm)
+library(dplyr)
 
 
 #### read data ####
 toronto_shelters_clean <- read_csv("data/analysis_data/analysis_data.csv")
 #### model data ####
+toronto_shelters <-
+  toronto_shelters_clean |>
+  slice_sample(n=1000)
+
 toronto_shelters_data_first_model_rstanarm <-
   stan_glm(
     formula = occupancy_rate_rooms ~ capacity_actual_room + service_user_count,
