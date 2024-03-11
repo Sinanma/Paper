@@ -22,9 +22,15 @@ library(tidyverse)
 library(here)
 library(rstanarm)
 library(modelsummary)
+<<<<<<< HEAD
 library(bayesplot)
 library(rstanarm)
 
+=======
+library(knitr)
+library(dplyr)
+library(tibble)
+>>>>>>> 5a359313b23fb50d7b2728e88c1634bb95678190
 ```
 
 
@@ -41,8 +47,34 @@ The remainder of this paper is structured as follows. @sec-data....
 Some of our data is of penguins (@fig-room_occupancy), from @palmerpenguins.
 
 ```{r}
+<<<<<<< HEAD
 #| label: fig-room_occupancy
 #| fig-cap: Monthly Average Occupancy of Shelter Rooms in Toronto, 2022
+=======
+#| label: tbl-torontoo
+#| tbl-cap: Shelter usage in Toronto in 2022
+#| echo: false
+  toronto_shelters_clean |>
+  mutate(occupancy_month = month(
+    occupancy_date,
+    label = TRUE,
+    abbr = FALSE
+  )) |>
+  arrange(month(occupancy_date)) |> 
+  drop_na(occupied_rooms) |>
+  summarise(number_occupied = mean(occupied_rooms),
+            .by = occupancy_month) |>
+  kable(
+    col.names = c("Month", "Avg daily occupied rooms"),
+    digits = 1
+  )
+```
+
+
+```{r}
+#| label: fig-bills
+#| fig-cap: Bills of penguins
+>>>>>>> 5a359313b23fb50d7b2728e88c1634bb95678190
 #| echo: false
 
 toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
@@ -53,9 +85,9 @@ toronto_shelters_clean |>
                                 abbr = FALSE)) |>
   arrange(month(occupancy_date)) |>
   drop_na(occupied_rooms) |> 
-  summarise(number_occupied = mean(occupied_rooms),
+  summarise(avgs_of_rooms_occupied = mean(occupied_rooms),
              .by = occupancy_month) |>
-  ggplot(aes(x= occupancy_month, y = number_occupied)) + geom_point()
+  ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
 ```
 
 
@@ -154,6 +186,29 @@ toronto_shelters_data_first_model_rstanarm <-
 #| message: false
 
 prior_summary(toronto_shelters_data_first_model_rstanarm)
+```
+
+```{r}
+draws <- 1000
+
+toronto_shelters_data_first_model_rstanarm <-
+  tibble(
+    sigma = rep(rexp(n = draws, rate = 1), times = 16),
+    beta_0 = rep(rnorm(n = draws, mean = 0, sd = 2.5), times = 16),
+    beta_1 = rep(rnorm(n = draws, mean = 8, sd = 2.5), times = 16),
+    five_km_time = rep(15:30, each = draws),
+    occupancy_rate_rooms = occupancy_rate_rooms, 
+    mu = beta_0 + beta_1 * occupancy_rate_rooms
+  ) |>
+  rowwise() |>
+  mutate(
+    capacity_actual_room = rnorm(n = 1, mean = mu, sd = sigma)
+  )
+
+toronto_shelters_data_first_model_rstanarm |>
+  ggplot(aes(x = occupancy_rate_rooms, y = capacity_actual_room)) +
+  geom_point(alpha = 0.1) +
+  theme_classic()
 ```
 
 
