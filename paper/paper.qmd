@@ -186,7 +186,9 @@ prior_summary(toronto_shelters_data_first_model_rstanarm)
 #| message: false
 draws <- 1000
 
-toronto_shelters_data_first_model_rstanarm <-
+occupancy_rate_rooms <- runif(n = draws * 16, min = 0.5, max = 1.5)
+
+toronto_shelters_clean <-
   tibble(
     sigma = rep(rexp(n = draws, rate = 1), times = 16),
     beta_0 = rep(rnorm(n = draws, mean = 0, sd = 2.5), times = 16),
@@ -200,7 +202,7 @@ toronto_shelters_data_first_model_rstanarm <-
     capacity_actual_room = rnorm(n = 1, mean = mu, sd = sigma)
   )
 
-toronto_shelters_data_first_model_rstanarm |>
+toronto_shelters_clean |>
   ggplot(aes(x = occupancy_rate_rooms, y = capacity_actual_room)) +
   geom_point(alpha = 0.1) +
   theme_classic()
@@ -214,13 +216,7 @@ toronto_shelters_data_first_model_rstanarm |>
 #| tbl-cap: "Explanatory models of Toronto's shelters usage based on occupancy rate  and service user count"
 #| warning: false
 
-modelsummary::modelsummary(
-  list(
-    "usage model" = toronto_shelters_data_first_model_rstanarm
-  ),
-  statistic = "mad",
-  fmt = 2
-)
+modelsummary(toronto_shelters_data_first_model_rstanarm)
 ```
 
 
