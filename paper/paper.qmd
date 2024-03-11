@@ -203,10 +203,12 @@ toronto_shelters_clean <-
     capacity_actual_room = rnorm(n = 1, mean = mu, sd = sigma)
   )
 
-toronto_shelters_clean |>
-  ggplot(aes(x = occupancy_rate_rooms, y = capacity_actual_room)) +
-  geom_point(alpha = 0.1) +
-  theme_classic()
+ggplot(toronto_shelters_clean, aes(x = occupancy_rate_rooms, y = capacity_actual_room)) +
+  geom_point(alpha = 0.2, color = "blue") + 
+  geom_smooth(method = "lm", se = FALSE, color = "red") +  theme_minimal() + labs(title = "Analysis of Shelter Capacity vs. Occupancy Rate",
+    x = "Occupancy Rate of Rooms",
+    y = "Actual Room Capacity"
+  )
 ```
 
 
