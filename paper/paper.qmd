@@ -40,9 +40,6 @@ toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.
 # Introduction
 
 
-
-
-
 # Data {#sec-data}
 
 
