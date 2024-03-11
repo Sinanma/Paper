@@ -22,6 +22,9 @@ library(tidyverse)
 library(here)
 library(rstanarm)
 library(modelsummary)
+library(bayesplot)
+library(rstanarm)
+
 ```
 
 
@@ -35,11 +38,11 @@ The remainder of this paper is structured as follows. @sec-data....
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+Some of our data is of penguins (@fig-room_occupancy), from @palmerpenguins.
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
+#| label: fig-room_occupancy
+#| fig-cap: Monthly Average Occupancy of Shelter Rooms in Toronto, 2022
 #| echo: false
 
 toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
@@ -57,8 +60,8 @@ toronto_shelters_clean |>
 
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-across_cities
+#| fig-cap: Occupancy of Shelter Rooms by Sector Across Toronto Cities
 #| echo: false
 #| warning: false
 #| message: false
@@ -73,8 +76,8 @@ toronto_shelters_clean |>
 ```
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-by_sector
+#| fig-cap: Comparative Analysis of Shelter Room Occupancy by Sector and Program Model Across Toronto Cities
 #| echo: false
 #| warning: false
 #| message: false
@@ -92,7 +95,7 @@ toronto_shelters_clean |>
 
 Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+And also planes (@fig-by_sector). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 
 
