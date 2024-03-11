@@ -18,6 +18,8 @@ bibliography: references.bib
 #| warning: false
 #| message: false
 
+####workspcae setup####
+
 library(tidyverse)
 library(here)
 library(rstanarm)
@@ -27,22 +29,44 @@ library(dplyr)
 library(tibble)
 ```
 
+```{r}
+#| include: false
+
+#### import data ####
+toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
+```
+
 
 # Introduction
 
-You can and should cross-reference sections and sub-sections. We use @citeR and @rohan.
 
-The remainder of this paper is structured as follows. @sec-data....
 
 
 
 # Data {#sec-data}
 
-Some of our data is of penguins (@fig-bills), from @palmerpenguins.
+
+
+
+```{r}
+#| label: fig-torontoo
+#| fig-cap: "Toronto shelter rooms average usage in 2022"
+#| echo: false
+
+toronto_shelters_clean |> 
+ mutate(occupancy_month = month(occupancy_date, 
+                                label = TRUE,
+                                abbr = FALSE)) |>
+  arrange(month(occupancy_date)) |>
+  drop_na(occupied_rooms) |> 
+  summarise(avgs_of_rooms_occupied = mean(occupied_rooms),
+             .by = occupancy_month) |>
+  ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
+```
 
 ```{r}
 #| label: tbl-torontoo
-#| tbl-cap: Shelter usage in Toronto in 2022
+#| tbl-cap: "Shelter usage in Toronto in 2022"
 #| echo: false
   toronto_shelters_clean |>
   mutate(occupancy_month = month(
@@ -62,27 +86,8 @@ Some of our data is of penguins (@fig-bills), from @palmerpenguins.
 
 
 ```{r}
-#| label: fig-bills
-#| fig-cap: Bills of penguins
-#| echo: false
-
-toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.csv"))
-
-toronto_shelters_clean |> 
- mutate(occupancy_month = month(occupancy_date, 
-                                label = TRUE,
-                                abbr = FALSE)) |>
-  arrange(month(occupancy_date)) |>
-  drop_na(occupied_rooms) |> 
-  summarise(avgs_of_rooms_occupied = mean(occupied_rooms),
-             .by = occupancy_month) |>
-  ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
-```
-
-
-```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-city
+#| fig-cap: "The shelter rooms usage based on different sector and city in Toronto"
 #| echo: false
 #| warning: false
 #| message: false
@@ -97,8 +102,8 @@ toronto_shelters_clean |>
 ```
 
 ```{r}
-#| label: fig-planes
-#| fig-cap: Relationship between wing length and width
+#| label: fig-programs
+#| fig-cap: "The shelter rooms usage based on different sector and services program inn Toronto."
 #| echo: false
 #| warning: false
 #| message: false
@@ -116,7 +121,7 @@ toronto_shelters_clean |>
 
 Talk more about it.
 
-And also planes (@fig-planes). (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
+ (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
 
 
 
@@ -128,7 +133,7 @@ Talk way more about it.
 
 The goal of our modelling strategy is twofold. Firstly,...
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in [Appendix -@sec-model-details].
+Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in.
 
 ## Model set-up
 
@@ -143,7 +148,6 @@ y_i|\mu_i, \sigma &\sim \mbox{Normal}(\mu_i, \sigma) \\
 \sigma &\sim \mbox{Exponential}(1)
 \end{align}
 
-We run the model in R [@citeR] using the `rstanarm` package of @rstanarm. We use the default priors from `rstanarm`.
 
 
 ### Model justification
@@ -178,6 +182,11 @@ prior_summary(toronto_shelters_data_first_model_rstanarm)
 ```
 
 ```{r}
+#| label: fig-models
+#| fig-cap: "The relationship between the occupancy rate and actual room occupied."  
+#| echo: false
+#| warning: false
+#| message: false
 draws <- 1000
 
 toronto_shelters_data_first_model_rstanarm <-
@@ -205,7 +214,7 @@ toronto_shelters_data_first_model_rstanarm |>
 #| echo: false
 #| eval: true
 #| label: tbl-modelresults
-#| tbl-cap: "Explanatory models of Toronto's shelters usage based on occupancy rate rooms and service user count"
+#| tbl-cap: "Explanatory models of Toronto's shelters usage based on occupancy rate  and service user count"
 #| warning: false
 
 modelsummary::modelsummary(
@@ -247,9 +256,8 @@ Weaknesses and next steps should also be included.
 
 ## Posterior predictive check
 
-In @fig-ppcheckandposteriorvsprior-1 we implement a posterior predictive check. This shows...
-
-In @fig-ppcheckandposteriorvsprior-2 we compare the posterior with the prior. This shows... 
+we implement a posterior predictive check. This shows...
+we compare the posterior with the prior. This shows... 
 
 ```{r}
 #| eval: true
@@ -274,9 +282,9 @@ posterior_vs_prior(toronto_shelters_data_first_model_rstanarm) +
 
 ## Diagnostics
 
-@fig-stanareyouokay-1 is a trace plot. It shows... This suggests...
+is a trace plot. It shows... This suggests...
 
-@fig-stanareyouokay-2 is a Rhat plot. It shows... This suggests...
+is a Rhat plot. It shows... This suggests...
 
 ```{r}
 #| echo: false
