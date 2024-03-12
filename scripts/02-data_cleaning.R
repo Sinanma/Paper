@@ -5,10 +5,6 @@
 # Date: 12, March 2024
 
 #### Workspace setup ####
-install.packages("opendatatoronto")
-install.packages("tidyverse")
-install.packages("janitor")
-
 library(opendatatoronto)
 library(tidyverse)
 library(janitor)

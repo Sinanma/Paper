@@ -5,7 +5,6 @@
 # Date: 12, March 2024
 
 #### Workspace setup ####
-install.packages("tidyverse")
 library(tidyverse)
 
 #### Simulate ####
