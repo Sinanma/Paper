@@ -13,7 +13,6 @@ toc: true
 number-sections: true
 bibliography: references.bib
 pdf-engine: xelatex
-mainfont: "Times New Roman"
 ---
 
 ```{r}
