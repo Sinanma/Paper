@@ -9,8 +9,11 @@ date: 12 March, 2024
 date-format: long
 abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
 format: pdf
+toc: true
 number-sections: true
 bibliography: references.bib
+pdf-engine: xelatex
+mainfont: "Times New Roman"
 ---
 
 ```{r}
@@ -42,9 +45,6 @@ toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.
 
 
 # Data {#sec-data}
-
-
-
 
 ```{r}
 #| label: fig-torontoo
