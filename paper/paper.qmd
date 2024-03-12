@@ -7,7 +7,7 @@ author:
 thanks: "Code and data are available at: LINK."
 date: 12 March, 2024
 date-format: long
-abstract: "First sentence. Second sentence. Third sentence. Fourth sentence."
+abstract: "The study examines the impact of the COVID-19 pandemic and government policies on Toronto's shelter system in 2022. It analyzes the system's response to external pressures using a dataset that includes shelter occupancy rates, service user counts, and capacity metrics. The findings show significant fluctuations in shelter demand and occupancy, highlighting both the system's resilience and vulnerabilities. The study also offers policymakers valuable insights into how to strengthen support for homeless populations in the face of future challenges. Despite temporary emergency shelters and a plan to transition to permanent affordable housing, the shelter system was under pressure from the pandemic, opioid crisis, and an increase in refugee claimants. The analysis offers useful insights for policymakers looking to improve support for homeless people."
 format: pdf
 toc: true
 number-sections: true
@@ -43,24 +43,16 @@ toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.
 
 # Introduction
 
+During the COVID-19 pandemic, urban shelters faced unprecedented challenges. The pandemic's ripple effects have reached Toronto's shelters, which provide a safety net for the city's homeless population. As public health directives evolved and governmental policies changed, the shelter system's response became a critical area of research to ensure the homeless's safety and well-being during and after the crisis.
+This paper looks at the complexities of shelter use, service demand, and capacity in Toronto's diverse urban landscape in 2022. Despite previous research on homelessness, there are few comprehensive analyses that combine a Bayesian approach with a visual examination of service patterns across shelter types and demographics. This study seeks to close that gap by providing a nuanced analysis of the current state of the shelter system using sophisticated statistical models and extensive visual data. On the other hand, we discovered some secondary resources about the city of Toronto, as well as any other pertinent resources. According to a City of Toronto article, the city plans to build over 400 affordable homes for homeless people, with 1,100 supportive homes completed in 2020. By 2022, the City of Toronto expects nearly 3,000 new housing opportunities.However, we also cite the article "Prevalence of SARS-CoV-2 infection among people experiencing homelessness in Toronto during the first wave of the COVID-19 pandemic" by the author Linh Luong and others that The COVID-19 pandemic has had a significant impact on homelessness, especially among Indigenous and racialized communities. Over 35,000 people in Canada are homeless on a daily basis, with Toronto's homeless population being especially diverse. 
+
+Furthermore, our Bayesian analysis reveals an unexpected pattern: men account for a disproportionately high proportion of all shelter occupants. This is especially noticeable in the colder winter months, indicating a seasonal susceptibility that corresponds to Toronto's lower temperatures. Furthermore, the data show a troubling pattern of men repeatedly using short-term shelters, indicating potential gaps in services designed to promote long-term housing stability.
+
+These discoveries are undeniably significant. The high proportion of men in shelter occupancy data necessitates a thorough reassessment of existing support structures designed specifically for men. It requires that resource allocation and policymaking be gender-sensitive. The high turnover rates and seasonal peaks in occupancy among men highlight the need for targeted interventions that address not only immediate shelter needs but also more general systemic issues such as employment, mental health, and substance abuse—all of which are frequently associated with homelessness. By highlighting these issues, our research contributes to a more informed conversation, which is critical for developing strong, long-term solutions for Toronto's homeless men.
+
+Our method, which we use We created and analyzed the statistic with the R. R Core Team (2023) and Wickham et al. (2019). This study employs Bayesian statistical models to examine shelter service data from across the city, including occupancy rates and service user demographics. Multiple bar charts and other graphical representations demonstrate the temporal and spatial dynamics of shelter use, revealing underlying trends and informing model parameters. 
 
 # Data {#sec-data}
-
-```{r}
-#| label: fig-torontoo
-#| fig-cap: "Toronto shelter rooms average usage in 2022"
-#| echo: false
-
-toronto_shelters_clean |> 
- mutate(occupancy_month = month(occupancy_date, 
-                                label = TRUE,
-                                abbr = FALSE)) |>
-  arrange(month(occupancy_date)) |>
-  drop_na(occupied_rooms) |> 
-  summarise(avgs_of_rooms_occupied = mean(occupied_rooms),
-             .by = occupancy_month) |>
-  ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
-```
 
 ```{r}
 #| label: tbl-torontoo
@@ -82,26 +74,25 @@ toronto_shelters_clean |>
   )
 ```
 
-
 ```{r}
-#| label: fig-city
-#| fig-cap: "The shelter rooms usage based on different sector and city in Toronto"
+#| label: fig-torontoo
+#| fig-cap: "Toronto shelter rooms average usage in 2022"
 #| echo: false
-#| warning: false
-#| message: false
-toronto_shelters_clean |>
-  drop_na(occupied_rooms, sector, location_city) |>
-  ggplot(aes(x = location_city, y = occupied_rooms, color = sector)) +
-  geom_point() +
-  theme_minimal() +
-  labs(x = "location_city", y = "occupied_rooms", color = "Sector") +
-  scale_color_brewer(palette = "Set1") +
-  theme(legend.position = "bottom")
+
+toronto_shelters_clean |> 
+ mutate(occupancy_month = month(occupancy_date, 
+                                label = TRUE,
+                                abbr = TRUE)) |>
+  arrange(month(occupancy_date)) |>
+  drop_na(occupied_rooms) |> 
+  summarise(avgs_of_rooms_occupied = mean(occupied_rooms),
+             .by = occupancy_month) |>
+  ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
 ```
 
 ```{r}
 #| label: fig-programs
-#| fig-cap: "The shelter rooms usage based on different sector and services program inn Toronto."
+#| fig-cap: "The shelter rooms usage based on different sector and services program in Toronto."
 #| echo: false
 #| warning: false
 #| message: false
@@ -227,17 +218,38 @@ modelsummary(toronto_shelters_data_first_model_rstanarm)
 
 # Discussion
 
-## First discussion point {#sec-first-point}
+## Findings {#sec-first-point}
 
-If my paper were 10 pages, then should be be at least 2.5 pages. The discussion is a chance to show off what you know and what you learnt from all this. 
+This study aimed to analyze the trends in shelter usage across Toronto in 2022, focusing on average usage rates of beds and rooms, the impact of different shelter program models, and the capacity needs across various demographics and city regions. The findings reveal significant insights into the dynamics of shelter usage and the pressing needs within the community, reflecting broader social issues.
 
-## Second discussion point
+The analysis indicates a clear seasonal trend in shelter usage, with occupancy rates peaking during the colder months. This pattern underscores the critical role of weather in influencing the demand for shelter services, aligning with previous research highlighting the vulnerability of homeless populations to adverse weather conditions (Reference). Furthermore, the distinction between emergency and transitional shelter types revealed diverse needs within the homeless population, suggesting a complex landscape of shelter requirements that vary not only by season but also by individual circumstances.
 
-## Third discussion point
+## Expanding Solutions: Toronto's Comprehensive Strategy Against Homelessness
 
-## Weaknesses and next steps
+Toronto's government has been proactive in responding to the homelessness crisis, with several plans aimed at alleviating the strain on the city's shelter system.
 
-Weaknesses and next steps should also be included.
+For the winter of 2023/2024, the City of Toronto has laid out a comprehensive Winter Services Plan to support those experiencing homelessness. This plan includes the activation of Warming Centres when temperatures drop to critical lows, addition of up to 180 shelter spaces by optimizing the existing shelter sites, and the creation of 170 spaces at Warming Centres during periods of cold weather. Importantly, the city acknowledges the increasing demand for shelter and housing, highlighting the need for urgent support from federal and provincial governments to manage capacity pressures [@Toronto2023WinterServices].
+
+Furthermore, Toronto has been actively working on creating more permanent solutions to homelessness. The city has purchased properties to be transitioned into affordable and supportive housing, with projects at 222 Spadina Ave. and 4626 Kingston Rd. already underway, providing homes for those at risk of or currently experiencing homelessness [@Toronto2023WinterPlanHomelessness]. This approach not only addresses immediate needs but also focuses on long-term solutions to prevent chronic homelessness by moving individuals from shelter systems into stable housing with necessary supports.
+
+These efforts reflect a multifaceted approach to tackling the challenges highlighted in our paper, demonstrating the city's commitment to not just managing but resolving the issue of homelessness. The initiatives underscore the importance of collaborative efforts between different levels of government and the community to address a complex issue that affects many in Toronto. The city's plans align with our findings, suggesting that while significant steps are being taken, continued and enhanced support is necessary to meet the growing demand for shelter and affordable housing in the face of various contributing factors such as pandemic, the opioid crisis, and an influx of refugee claimants and asylum seekers.
+
+
+## Implications
+
+The implications of these findings are multifaceted. Firstly, the seasonal surge in shelter demand highlights the necessity for scalable solutions in Toronto's shelter services to accommodate fluctuating needs. This could involve dynamic resource allocation strategies that adjust in anticipation of seasonal trends. Secondly, the varied demands between emergency and transitional shelters suggest a need for a more nuanced approach to shelter provision, one that caters to the specific needs of different demographic groups.
+
+## Limitations
+
+This study is not without limitations. The reliance on publicly available data may introduce biases, as not all instances of shelter usage or homelessness are captured within the dataset. Additionally, the analysis does not account for the potential impact of policy changes or other external factors that may influence shelter demand. These limitations suggest caution in generalizing the findings without consideration of the broader context.
+
+## Suggestions for Future Research
+
+Future research should aim to address the identified limitations by incorporating more comprehensive datasets, potentially including qualitative data that captures the lived experiences of those utilizing shelter services. Furthermore, exploring the impact of policy interventions on shelter usage trends could offer valuable insights into effective strategies for managing shelter capacity and meeting the needs of vulnerable populations.
+
+## Conclusion
+
+The study of Toronto's shelter usage in 2022 provides critical insights into the challenges faced by homeless populations and the services designed to support them. By understanding the trends and factors influencing shelter demand, policymakers and service providers can better prepare for and address the complex needs of those seeking shelter. Continued research and innovation in this field are essential to developing effective solutions that ensure no individual is left without refuge in times of need.
 
 \newpage
 
