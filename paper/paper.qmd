@@ -53,6 +53,12 @@ Our method, which we use We created and analyzed the statistic with the R. R Cor
 
 # Data {#sec-data}
 
+From @tbl-torontoo, 
+
+# Average rooms usage in Toronto Shelter of 2022
+The statistics from @tbl-torontoo and scatter plot in @fig-torontoo illustrated the mean daily occupancy rates for Toronto's shelter system in 2022, offering a detailed perspective on the impact of seasonal variations and other factors on shelter utilization. The occupancy rate starts at a reasonable level during the winter months and gradually increases, reaching its highest point in October at 71.5, before slightly declining towards the end of the year. This pattern indicates a growing demand for shelter as the year advances, especially during the autumn season. This increase could be linked to cooler temperatures, changes in socioeconomic conditions, or alterations in policies that impact the homeless community.
+The following abstract highlights the influence of COVID-19, the opined crisis, and increasing refugee claims on the shelter system, suggesting that these issues are major contributors to the observed changes in shelter usage. Although there have been efforts to make housing more accessible and provide temporary emergency shelters, the shelter system is still being challenged, as shown by the consistently high occupancy rates, especially towards the end of the year. This suggests that the shelter system is both adaptable and under significant strain, highlighting the urgent requirement for policymakers to modify and strengthen their assistance for the homeless population. This is particularly important in anticipation of future issues that could further burden the system.
+
 ```{r}
 #| label: tbl-torontoo
 #| tbl-cap: "Shelter usage in Toronto in 2022"
@@ -89,6 +95,11 @@ toronto_shelters_clean |>
   ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
 ```
 
+# The occupancy of shelter's room in 2022 Toronto by different city, sector, and programs
+
+The first graph @fig-across_cities is a scatter plot that depicts the distribution of occupied rooms by several sectors, such as families, males, mixed adults, women, and youth, across several places, including Etobicoke, North York, Scarborough, Toronto proper, and Vaughan. Each dot shows the amount of rooms inhabited by a sector within a certain city. The most notable finding here is that Toronto has the highest occupancy rate across all categories, notably for families and mixed adults, showing a concentrated demand for shelters in the city's core. 
+The second graph @fig-programs presents a stacked bar chart that compares emergency and transitional shelter occupancy in the same areas. Emergency shelters have substantially greater occupancy rates, particularly in Toronto, where the bar exceeds 30,000. This implies a strong reliance on emergency shelters, which are normally used for short-term stays, implying that there may be an immediate and pressing need for shelter that cannot be provided by longer-term solutions. Transitional shelters, which provide a more stable but not permanent housing alternative, have substantially lower usage, with Toronto once again leading in occupancy.
+
 ```{r}
 #| label: fig-across_cities
 #| fig-cap: Occupancy of Shelter Rooms by Sector Across Toronto Cities
@@ -124,14 +135,9 @@ toronto_shelters_clean |>
   scale_fill_viridis_d(option = "magma")
 ```
 
-Talk more about it.
-
- (You can change the height and width, but don't worry about doing that until you have finished every other aspect of the paper - Quarto will try to make it look nice and the defaults usually work well once you have enough text.)
-
-
-
-Talk way more about it. 
-
+# Measurements
+The data measures demonstrate the systemic influence of COVID-19 and other crises on shelter demands when paired with the contextual information given in the introduction and abstract. The high occupancy rates, particularly in emergency shelters, indicate a severely overburdened shelter system despite efforts like the establishment of emergency shelters and the shift to permanent housing. This thorough data analysis confirms the necessity for well-informed policy responses that improve the support given to different demographic groups and the system's capability, especially in light of impending and continuing challenges.
+Data on shelter occupancy in the Toronto area is shown in a scatter plot and bar graph. The first graph summarises total occupancy in emergency versus transitional shelters, while the second shows individual occupancy by sector (families, men, mixed adults, women, and youth) across several cities. The scatter plot's data points give an overview of demand within each demographic sector. At the same time, the graph's stacked bars show the overall occupancy levels and emphasize the need for emergency shelters, especially in central Toronto. The y-axes of both visualizations quantify the number of rooms occupied and use numerical measures of occupancy.
 
 
 # Model
