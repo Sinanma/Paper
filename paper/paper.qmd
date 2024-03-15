@@ -90,6 +90,23 @@ toronto_shelters_clean |>
 ```
 
 ```{r}
+#| label: fig-across_cities
+#| fig-cap: Occupancy of Shelter Rooms by Sector Across Toronto Cities
+#| echo: false
+#| warning: false
+#| message: false
+toronto_shelters_clean |>
+  drop_na(occupied_rooms, sector, location_city) |>
+  ggplot(aes(x = location_city, y = occupied_rooms, color = sector)) +
+  geom_point() +
+  theme_minimal() +
+  labs(x = "location_city", y = "occupied_rooms", color = "Sector") +
+  scale_color_brewer(palette = "Set1") +
+  theme(legend.position = "bottom")
+```
+
+
+```{r}
 #| label: fig-programs
 #| fig-cap: "The shelter rooms usage based on different sector and services program in Toronto."
 #| echo: false
