@@ -43,17 +43,14 @@ toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.
 # Introduction
 
 During the COVID-19 pandemic, urban shelters faced unprecedented challenges. The pandemic's ripple effects have reached Toronto's shelters, which provide a safety net for the city's homeless population. As public health directives evolved and governmental policies changed, the shelter system's response became a critical area of research to ensure the homeless's safety and well-being during and after the crisis.
-This paper looks at the complexities of shelter use, service demand, and capacity in Toronto's diverse urban landscape in 2022. Despite previous research on homelessness, there are few comprehensive analyses that combine a Bayesian approach with a visual examination of service patterns across shelter types and demographics. This study seeks to close that gap by providing a nuanced analysis of the current state of the shelter system using sophisticated statistical models and extensive visual data. On the other hand, we discovered some secondary resources about the city of Toronto, as well as any other pertinent resources. According to a City of Toronto article, the city plans to build over 400 affordable homes for homeless people, with 1,100 supportive homes completed in 2020. By 2022, the City of Toronto expects nearly 3,000 new housing opportunities.However, we also cite the article "Prevalence of SARS-CoV-2 infection among people experiencing homelessness in Toronto during the first wave of the COVID-19 pandemic" by the author Linh Luong and others that The COVID-19 pandemic has had a significant impact on homelessness, especially among Indigenous and racialized communities. Over 35,000 people in Canada are homeless on a daily basis, with Toronto's homeless population being especially diverse. 
+This paper looks at the complexities of shelter use, service demand, and capacity in Toronto's diverse urban landscape in 2022. Despite previous research on homelessness, there are few comprehensive analyses that combine a Bayesian approach with a visual examination of service patterns across shelter types and demographics. This study seeks to close that gap by providing a nuanced analysis of the current state of the shelter system using sophisticated statistical models and extensive visual data. On the other hand, we discovered some secondary resources about the city of Toronto, as well as any other pertinent resources. According to a City of Toronto article, the city plans to build over 400 affordable homes for homeless people, with 1,100 supportive homes completed in 2020. By 2022, the City of Toronto expects nearly 3,000 new housing opportunities.However, we also cite the article "Prevalence of SARS-CoV-2 infection among people experiencing homelessness in Toronto during the first wave of the COVID-19 pandemic" by the author Linh Luong[@luong2022prevalence] and others that The COVID-19 pandemic has had a significant impact on homelessness, especially among Indigenous and racialized communities. Over 35,000 people in Canada are homeless on a daily basis, with Toronto's homeless population being especially diverse.
 
 Furthermore, our Bayesian analysis reveals an unexpected pattern: men account for a disproportionately high proportion of all shelter occupants. This is especially noticeable in the colder winter months, indicating a seasonal susceptibility that corresponds to Toronto's lower temperatures. Furthermore, the data show a troubling pattern of men repeatedly using short-term shelters, indicating potential gaps in services designed to promote long-term housing stability.
 
-These discoveries are undeniably significant. The high proportion of men in shelter occupancy data necessitates a thorough reassessment of existing support structures designed specifically for men. It requires that resource allocation and policymaking be gender-sensitive. The high turnover rates and seasonal peaks in occupancy among men highlight the need for targeted interventions that address not only immediate shelter needs but also more general systemic issues such as employment, mental health, and substance abuse—all of which are frequently associated with homelessness. By highlighting these issues, our research contributes to a more informed conversation, which is critical for developing strong, long-term solutions for Toronto's homeless men.
-
-Our method, which we use We created and analyzed the statistic with the R. R Core Team (2023) and Wickham et al. (2019). This study employs Bayesian statistical models to examine shelter service data from across the city, including occupancy rates and service user demographics. Multiple bar charts and other graphical representations demonstrate the temporal and spatial dynamics of shelter use, revealing underlying trends and informing model parameters. 
-
+These discoveries are undeniably significant. The high proportion of men in shelter occupancy data necessitates a thorough reassessment of existing support structures designed specifically for men. It requires that resource allocation and policy making be gender-sensitive. The high turnover rates and seasonal peaks in occupancy among men highlight the need for targeted interventions that address not only immediate shelter needs but also more general systemic issues such as employment, mental health, and substance abuse—all of which are frequently associated with homelessness. By highlighting these issues, our research contributes to a more informed conversation, which is critical for developing strong, long-term solutions for Toronto's homeless men.
 # Data {#sec-data}
 
-From @tbl-torontoo, 
+The data set was collected by the city of Toronto's data @opendatatoronto. We have choose the daily shelter and overnight service occupancy and capacity as the main direction of research. We analysis the data in R(@citeR), with additional tools for support my analysis, including `tidyverse`[@citetidyverse], `here`[@citehere], `dplyr`[@citedplyr], `readr`[@citereadr], `modelsummary`[@citemodelsummary], `janitor`[@citejanitor], `tibble`[@citetibble], `ggplot2`[@citeggplot2], and research method is from @tellingstorieswithdata. 
 
 ## Average rooms usage in Toronto Shelter of 2022
 The statistics from @tbl-torontoo and scatter plot in @fig-torontoo illustrated the mean daily occupancy rates for Toronto's shelter system in 2022, offering a detailed perspective on the impact of seasonal variations and other factors on shelter utilization. The occupancy rate starts at a reasonable level during the winter months and gradually increases, reaching its highest point in October at 71.5, before slightly declining towards the end of the year. This pattern indicates a growing demand for shelter as the year advances, especially during the autumn season. This increase could be linked to cooler temperatures, changes in socioeconomic conditions, or alterations in policies that impact the homeless community.
@@ -127,13 +124,29 @@ Data on shelter occupancy in the Toronto area is shown in a scatter plot and bar
 
 # Model
 
-The goal of our modelling strategy is twofold. Firstly,...
+In our study, the study used a Bayesian analysis model to investigate occupancy patterns and service utilization in Toronto's shelter system in 2022. The model was chosen because of its ability to account for prior knowledge and uncertainty, resulting in a probabilistic approach to understanding shelter usage data. The model used a hierarchical structure to account for the different effects of factors like location, demographic groups, and time of year on shelter occupancy rates. The posterior distributions of model parameters revealed information about the relationships between these factors and shelter usage, particularly across different parts of the city and demographic groups. 
 
-Here we briefly describe the Bayesian analysis model used to investigate... Background details and diagnostics are included in.
+However, The Bayesian model used in the analysis was effective in drawing significant conclusions about Toronto's shelter service usage trends. The study provided a multidimensional view of the shelter system by combining quantitative analysis and data visualization, as well as identifying significant trends and patterns that can inform service delivery and policy. Instead of being based on an image, the information about the priors being normally distributed with a location of 0 and a scale of 2.5 is based on a standard Bayesian statistics method for defining model priors. A normal distribution is frequently used as a weakly informative prior. This option represents a baseline assumption that, prior to data observation, the coefficients should be centered around 0, indicating no effect with a degree of uncertainty represented by the scale.
+
+The model specified occupancy rates as a function of several covariates, including time (months), city location (e.g., Etobicoke, North York, Scarborough, Toronto, Vaughan), and shelter demographics. Specifically, we used the number of occupied rooms (number_occupied) as a response variable, with (occupancy_month) and (location_city) as predictor variables, as well as sectors to account for different demographic groups.
+
 
 ## Model set-up
 
-Define $y_i$ as the number of seconds that the plane remained aloft. Then $\beta_i$ is the wing width and $\gamma_i$ is the wing length, both measured in millimeters.  
+$y_i | \mu_i \sim \text{Normal}(\mu_i, \sigma)$: Following the Bayesian model, we know that this implies that the outcome variable $y_i$, conditioned on the mean $\mu_i$, has a normal distribution with standard deviation $\sigma$. For the Toronto shelter, $y_i$ can represent the number of people who come to the shelter on day $i$, or other relevant response metric, such as the number of occupied beds.
+
+$\mu_i = \beta_0 + \beta_1 \cdot x_i$ : This is the linear model, where $\mu_i$ represents the expected value of $y_i$. The intercept $\beta_0$ and slope $beta_1$ are multiplied by the predictor $x_i$. In the Toronto shelter, $x_i$ represents a variable of interest, it  could represent the variables such as the capacity of the shelter, the number of services offered, location factors, or the time of year. 
+
+$\beta_0, \sim \text{Normal}(0, 2.5)$ : The intercept term $\beta_0$ is assumed to be centred around 0 with a standard deviation of 2.5. This means that you do not expect a strong relationship between the predictor variable $x_i$ and the outcome $y_i$ before analyzing the data, but you are open to the possibility of discovering one.This expresses modest prior knowledge about shelter occupancy rates, allowing the data to significantly influence the posterior distribution $\beta_0$.
+
+$\beta_1 \sim \text{Normal}(0, 2.5)$ : In a comparable way, this indicates the previous consensus regarding the slope β1 was that it has a standard deviation of 2.5 and is centered around 0. This implies that, prior to data analysis, you do not expect a strong relationship between the predictor variable $x_i$ and the outcome of $y_i$. 
+
+$\sigma \sim \text{Exponential}(1)$ : This implies that the prior belief for the standard deviation of the outcome variable's distribution is an exponential distribution with a rate parameter of one. This suggests lower σ values, indicating less variability in daily shelter use. However, you are open to learning from the data if there is more variability than expected.This distribution is commonly used for scale parameters like σ in Bayesian models because it is constrained to positive values and can represent a wide range of variability.
+
+
+Furthermore, the Bayesian model is used in our study to examine occupancy rates in Toronto's shelter system, allowing for a thorough understanding of the uncertainties and variables associated with shelter use. This method generates preliminary estimates, which can be refined as more data becomes available, resulting in a probabilistic forecast. The model's predictive power stems from its ability to differentiate between the effects of various factors on the number of people seeking shelter. By assigning priors to model parameters and tracking their evolution through posterior distributions, the model learns about the relative weight of each factor, allowing it to identify which signals are genuine and worth paying attention to.
+The Bayesian framework allows for a dynamic dialogue between data and theory, challenging and refining our understanding of the relationship between socioeconomic factors and shelter demand. This dialogue lays the groundwork for developing targeted policies that are both responsive to immediate needs and proactive in promoting long-term solutions to homelessness. The model's findings serve as an empirical foundation for resource allocation discussions, allowing policymakers to prioritize funding, tailor services to demographic needs, and design interventions that directly address identified causes of shelter overuse.
+  
 
 \begin{align}
 y_i|\mu_i &\sim \text{Normal}(\mu_i, \sigma) \\
@@ -147,9 +160,10 @@ y_i|\mu_i &\sim \text{Normal}(\mu_i, \sigma) \\
 
 ## Model justification
 
-We expect a positive relationship between the size of the wings and time spent aloft. In particular...
+The Bayesian model was used to analyzing in Toronto's shelter occupancy rates since it is reliable, adaptable, and possesses a lot of information. The model analyzes what it currently knows and adds it to the data it has seen to make an accurate assessment that is based on both past events and present conditions. It finds possible correlations in nested data, which lets you get an accurate understanding of how individual and group-level covariates affect occupancy rates. Thus, the Bayesian approach measures uncertainty by giving a full probabilistic account of all unknowns. 
 
-We can use maths by including latex between dollar signs, for instance $\theta$.
+However, the model are also flexible, since it can be updated all the time as new data comes in. This makes it a dynamic tool for ongoing policy change and assessment. The Bayesian model also lets us examine at the complicated connections and interactions between covariates like demographic variables, economic factors, and neighbourhood characteristics. It Figuring out these connections can help you see deeper patterns and trends that other modelling methods might miss. Lastly, the Bayesian model was picked because it is reliable, adaptable, and gives a lot of information. This makes it an important tool for understanding the Toronto shelter system and making it work better and have a bigger effect.
+
 
 
 # Results
@@ -167,6 +181,7 @@ toronto_shelters_data_first_model_rstanarm <-
   readRDS(file = here::here("models/shelters_data_model_one_rstanarm.rds"))
 ```
 
+<<<<<<< HEAD
 \newpage
 
 The stacked bar graph (@fig-programs) provides a detailed breakdown of room occupancy within Toronto's shelter system, comparing emergency and transitional program usage across different sectors and cities. The data reveals a pronounced reliance on emergency shelters, with Toronto showing the highest occupancy rates, particularly for men and mixed adults. In contrast, transitional shelters are utilized less, though they play a critical role for youth and women in Toronto.This difference in shelter usage indicates a urgent need for targeted policies to support sustainable housing and services. Such policies should aim to decrease the heavy reliance on immediate, short-term shelters and enhance the use of transitional shelters that support the progression toward stable, long-term accommodation.
@@ -193,6 +208,8 @@ toronto_shelters_clean |>
 
 The scatter plot(@fig-models) illustrates the relationship between the occupancy rate of rooms and the actual room capacity in Toronto's shelters. Each point represents a data pairing of these two variables, showing a positive trend: as the occupancy rate increases, the actual capacity used also tends to increase. The red line indicates the average trend, cutting through the data to demonstrate the general direction of this relationship. This graph indicats that as more people use the shelters, the actual number of rooms occupied goes up, which could strain the shelter system. The analysis underscores the importance of using predictive models to inform policy decisions and resource allocation, ensuring that the shelter system can accommodate the needs of Toronto's homeless population effectively.
 
+=======
+>>>>>>> 46db0260dcc5d29aad59526ce3e9dcbc32b72567
 ```{r}
 #| label: fig-models
 #| fig-cap: "The relationship between the occupancy rate and actual room occupied."  
@@ -237,8 +254,11 @@ The table (@tbl-modelresults) presents a statistical model summarizing the facto
 modelsummary(toronto_shelters_data_first_model_rstanarm)
 ```
 
+<<<<<<< HEAD
 Our findings point to the critical need for policy makers and shelter administrators to implement targeted interventions that address the specific needs of Toronto's homeless population. The evidence supports the call for an expansion of shelter capacity and the development of comprehensive long-term housing strategies. These actions are imperative to ensure that the shelter system can adequately respond to the demands of a diverse and growing homeless population, paving the way for more sustainable and inclusive solutions to homelessness in Toronto and beyond.
 
+=======
+>>>>>>> 46db0260dcc5d29aad59526ce3e9dcbc32b72567
 
 # Discussion
 
@@ -274,59 +294,6 @@ Future research should aim to address the identified limitations by incorporatin
 ## Conclusion
 
 The study of Toronto's shelter usage in 2022 provides critical insights into the challenges faced by homeless populations and the services designed to support them. By understanding the trends and factors influencing shelter demand, policymakers and service providers can better prepare for and address the complex needs of those seeking shelter. Continued research and innovation in this field are essential to developing effective solutions that ensure no individual is left without refuge in times of need.
-
-\newpage
-
-\appendix
-
-# Appendix {-}
-
-
-# Additional data details
-
-# Model details {#sec-model-details}
-
-## Posterior predictive check
-
-we implement a posterior predictive check. This shows...
-we compare the posterior with the prior. This shows... 
-
-```{r}
-#| eval: true
-#| echo: false
-#| message: false
-#| warning: false
-#| label: fig-ppcheckandposteriorvsprior
-#| layout-ncol: 2
-#| fig-cap: "Examining how the model fits, and is affected by, the data"
-
-pp_check(toronto_shelters_data_first_model_rstanarm) +
-  theme_classic() +
-  theme(legend.position = "bottom")
-```
-
-## Diagnostics
-
-is a trace plot. It shows... This suggests...
-
-is a Rhat plot. It shows... This suggests...
-
-```{r}
-#| echo: false
-#| eval: true
-#| message: false
-#| warning: false
-#| label: fig-stanareyouokay
-#| fig-cap: "Checking the convergence of the MCMC algorithm"
-#| fig-subcap: ["Trace plot", "Rhat plot"]
-#| layout-ncol: 2
-
-plot(toronto_shelters_data_first_model_rstanarm, "trace")
-
-plot(toronto_shelters_data_first_model_rstanarm, "rhat")
-```
-
-
 
 \newpage
 
