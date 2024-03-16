@@ -43,18 +43,30 @@ toronto_shelters_clean <- read_csv(here::here("data/analysis_data/analysis_data.
 # Introduction
 
 During the COVID-19 pandemic, urban shelters faced unprecedented challenges. The pandemic's ripple effects have reached Toronto's shelters, which provide a safety net for the city's homeless population. As public health directives evolved and governmental policies changed, the shelter system's response became a critical area of research to ensure the homeless's safety and well-being during and after the crisis.
-This paper looks at the complexities of shelter use, service demand, and capacity in Toronto's diverse urban landscape in 2022. Despite previous research on homelessness, there are few comprehensive analyses that combine a Bayesian approach with a visual examination of service patterns across shelter types and demographics. This study seeks to close that gap by providing a nuanced analysis of the current state of the shelter system using sophisticated statistical models and extensive visual data. On the other hand, we discovered some secondary resources about the city of Toronto, as well as any other pertinent resources. According to a City of Toronto article, the city plans to build over 400 affordable homes for homeless people, with 1,100 supportive homes completed in 2020. By 2022, the City of Toronto expects nearly 3,000 new housing opportunities.However, we also cite the article "Prevalence of SARS-CoV-2 infection among people experiencing homelessness in Toronto during the first wave of the COVID-19 pandemic" by the author Linh Luong[@luong2022prevalence] and others that The COVID-19 pandemic has had a significant impact on homelessness, especially among Indigenous and racialized communities. Over 35,000 people in Canada are homeless on a daily basis, with Toronto's homeless population being especially diverse.
+This paper looks at the complexities of shelter use, service demand, and capacity in Toronto's diverse urban landscape in 2022. Despite previous research on homelessness, there are few comprehensive analyses that combine a Bayesian approach with a visual examination of service patterns across shelter types and demographics. 
+
+In this study, our primary estimand is the differential impact of seasonal changes on shelter occupancy rates. We aim to close that gap by providing a nuanced analysis of the current state of the shelter system using sophisticated statistical models and extensive visual data. On the other hand, we discovered some secondary resources about the city of Toronto, as well as any other pertinent resources. According to a City of Toronto article, the city plans to build over 400 affordable homes for homeless people, with 1,100 supportive homes completed in 2020. By 2022, the City of Toronto expects nearly 3,000 new housing opportunities. However, we also cite the article "Prevalence of SARS-CoV-2 infection among people experiencing homelessness in Toronto during the first wave of the COVID-19 pandemic" by the author Linh Luong[@luong2022prevalence] and others that The COVID-19 pandemic has had a significant impact on homelessness, especially among Indigenous and racialized communities. Over 35,000 people in Canada are homeless on a daily basis, with Toronto's homeless population being especially diverse.
 
 Furthermore, our Bayesian analysis reveals an unexpected pattern: men account for a disproportionately high proportion of all shelter occupants. This is especially noticeable in the colder winter months, indicating a seasonal susceptibility that corresponds to Toronto's lower temperatures. Furthermore, the data show a troubling pattern of men repeatedly using short-term shelters, indicating potential gaps in services designed to promote long-term housing stability.
 
 These discoveries are undeniably significant. The high proportion of men in shelter occupancy data necessitates a thorough reassessment of existing support structures designed specifically for men. It requires that resource allocation and policy making be gender-sensitive. The high turnover rates and seasonal peaks in occupancy among men highlight the need for targeted interventions that address not only immediate shelter needs but also more general systemic issues such as employment, mental health, and substance abuse—all of which are frequently associated with homelessness. By highlighting these issues, our research contributes to a more informed conversation, which is critical for developing strong, long-term solutions for Toronto's homeless men.
+
 # Data {#sec-data}
 
-The data set was collected by the city of Toronto's data @opendatatoronto. We have choose the daily shelter and overnight service occupancy and capacity as the main direction of research. We analysis the data in R(@citeR), with additional tools for support my analysis, including `tidyverse`[@citetidyverse], `here`[@citehere], `dplyr`[@citedplyr], `readr`[@citereadr], `modelsummary`[@citemodelsummary], `janitor`[@citejanitor], `tibble`[@citetibble], `ggplot2`[@citeggplot2], and research method is from @tellingstorieswithdata. 
+The dataset was collected by the city of Toronto and obtained from OpenDataToronto [@opendatatoronto].  This dataset captures the shelter use throughout the diverse urban landscape of Toronto in 2022, which is a year marked by the ongoing impacts of the COVID-19 pandemic, economic fluctuations, and changes in governmental policies affecting the homeless population. We analysis the data in R(@citeR), with additional tools for support the analysis, including `tidyverse`[@citetidyverse], `here`[@citehere], `dplyr`[@citedplyr], `readr`[@citereadr], `modelsummary`[@citemodelsummary], `janitor`[@citejanitor], `tibble`[@citetibble], `ggplot2`[@citeggplot2], and research method is from @tellingstorieswithdata. 
 
-## Average rooms usage in Toronto Shelter of 2022
-The statistics from @tbl-torontoo and scatter plot in @fig-torontoo illustrated the mean daily occupancy rates for Toronto's shelter system in 2022, offering a detailed perspective on the impact of seasonal variations and other factors on shelter utilization. The occupancy rate starts at a reasonable level during the winter months and gradually increases, reaching its highest point in October at 71.5, before slightly declining towards the end of the year. This pattern indicates a growing demand for shelter as the year advances, especially during the autumn season. This increase could be linked to cooler temperatures, changes in socioeconomic conditions, or alterations in policies that impact the homeless community.
-The following abstract highlights the influence of COVID-19, the opined crisis, and increasing refugee claims on the shelter system, suggesting that these issues are major contributors to the observed changes in shelter usage. Although there have been efforts to make housing more accessible and provide temporary emergency shelters, the shelter system is still being challenged, as shown by the consistently high occupancy rates, especially towards the end of the year. This suggests that the shelter system is both adaptable and under significant strain, highlighting the urgent requirement for policymakers to modify and strengthen their assistance for the homeless population. This is particularly important in anticipation of future issues that could further burden the system.
+## Variables
+
+The primary factor being examined is the average number of rooms occupied daily in shelters, indicating the demand for shelter services and how it varies throughout the year of 2022. This analysis is further detailed by distinguishing between types of shelter programs—emergency shelters for immediate needs, and transitional shelters for longer-term stays. Furthermore, the study considers demographic segments such as families, men, women, mixed adults, and youth to provide insight into the diverse populations utilizing these services. Geographic analysis divides the data by city areas, including Etobicoke, North York, Scarborough, Toronto, and Vaughan, offering a clear view of where the demand for shelters is most pronounced within the metropolitan region.
+
+Key variables were constructed to enhance the analysis, such as categorizing months into seasons to explore potential weather-related trends in shelter usage. Data cleaning efforts involved addressing missing values and outliers, ensuring the reliability of the analysis. Details on these processes are transparently documented in our code repository.
+
+## Alternative Data Considerations
+
+While other datasets might have been available, such as individual level admission statistics or broader homelessness data. These were not utilized for specific reasons. The selected dataset's aggregate nature avoids the privacy concerns associated with individual data and provides a consistent, high-level view suitable for policy analysis. Additionally, the dataset's reliability and the authority of the source OpenDataToronto [@opendatatoronto] ensure a robust foundation for the investigation.
+
+## Visualizations and Summary Statistics
+To provide a better understanding in comprehension of the dataset, visualizations such as statistic (@tbl-torontoo) and scatter plots (@fig-torontoo, @fig-across_cities) have been included. These visuals depict monthly occupancy trends, and geographic distribution of shelter use. 
 
 ```{r}
 #| label: tbl-torontoo
@@ -79,6 +91,10 @@ Sys.setlocale("LC_TIME", "en_US.UTF-8")
   )
 ```
 
+The statistics from @tbl-torontoo and scatter plot in @fig-torontoo illustrated the mean daily occupancy rates for Toronto's shelter system in 2022, offering a detailed perspective on the impact of seasonal variations and other factors on shelter utilization. The occupancy rate starts at a reasonable level during the winter months and gradually increases, reaching its highest point in October at 71.5, before slightly declining towards the end of the year. This pattern indicates a growing demand for shelter as the year advances, especially during the autumn season. This increase could be linked to cooler temperatures, changes in socioeconomic conditions, or alterations in policies that impact the homeless community.
+
+The following abstract highlights the influence of COVID-19, the opined crisis, and increasing refugee claims on the shelter system, suggesting that these issues are major contributors to the observed changes in shelter usage. Although there have been efforts to make housing more accessible and provide temporary emergency shelters, the shelter system is still being challenged, as shown by the consistently high occupancy rates, especially towards the end of the year. This suggests that the shelter system is both adaptable and under significant strain, highlighting the urgent requirement for policymakers to modify and strengthen their assistance for the homeless population. This is particularly important in anticipation of future issues that could further burden the system.
+
 ```{r}
 #| label: fig-torontoo
 #| fig-cap: "Toronto shelter rooms average usage in 2022"
@@ -95,10 +111,7 @@ toronto_shelters_clean |>
   ggplot(aes(x= occupancy_month, y = avgs_of_rooms_occupied)) + geom_point()
 ```
 
-## The occupancy of shelter's room in 2022 Toronto by different city, sector, and programs
-
-The first graph @fig-across_cities is a scatter plot that depicts the distribution of occupied rooms by several sectors, such as families, males, mixed adults, women, and youth, across several places, including Etobicoke, North York, Scarborough, Toronto proper, and Vaughan. Each dot shows the amount of rooms inhabited by a sector within a certain city. The most notable finding here is that Toronto has the highest occupancy rate across all categories, notably for families and mixed adults, showing a concentrated demand for shelters in the city's core. 
-The second graph @fig-programs presents a stacked bar chart that compares emergency and transitional shelter occupancy in the same areas. Emergency shelters have substantially greater occupancy rates, particularly in Toronto, where the bar exceeds 30,000. This implies a strong reliance on emergency shelters, which are normally used for short-term stays, implying that there may be an immediate and pressing need for shelter that cannot be provided by longer-term solutions. Transitional shelters, which provide a more stable but not permanent housing alternative, have substantially lower usage, with Toronto once again leading in occupancy.
+The scatter plot (@fig-across_cities) that depicts the distribution of occupied rooms by several sectors, such as families, males, mixed adults, women, and youth, across several places, including Etobicoke, North York, Scarborough, Toronto proper, and Vaughan. Each dot shows the amount of rooms inhabited by a sector within a certain city. The most notable finding here is that Toronto has the highest occupancy rate across all categories, notably for families and mixed adults, showing a concentrated demand for shelters in the city's core. 
 
 ```{r}
 #| label: fig-across_cities
@@ -120,7 +133,6 @@ toronto_shelters_clean |>
 ## Measurements
 The data measures demonstrate the systemic influence of COVID-19 and other crises on shelter demands when paired with the contextual information given in the introduction and abstract. The high occupancy rates, particularly in emergency shelters, indicate a severely overburdened shelter system despite efforts like the establishment of emergency shelters and the shift to permanent housing. This thorough data analysis confirms the necessity for well-informed policy responses that improve the support given to different demographic groups and the system's capability, especially in light of impending and continuing challenges.
 Data on shelter occupancy in the Toronto area is shown in a scatter plot and bar graph. The first graph summarises total occupancy in emergency versus transitional shelters, while the second shows individual occupancy by sector (families, men, mixed adults, women, and youth) across several cities. The scatter plot's data points give an overview of demand within each demographic sector. At the same time, the graph's stacked bars show the overall occupancy levels and emphasize the need for emergency shelters, especially in central Toronto. The y-axes of both visualizations quantify the number of rooms occupied and use numerical measures of occupancy.
-
 
 # Model
 
@@ -158,6 +170,7 @@ y_i|\mu_i &\sim \text{Normal}(\mu_i, \sigma) \\
 
 
 
+
 ## Model justification
 
 The Bayesian model was used to analyzing in Toronto's shelter occupancy rates since it is reliable, adaptable, and possesses a lot of information. The model analyzes what it currently knows and adds it to the data it has seen to make an accurate assessment that is based on both past events and present conditions. It finds possible correlations in nested data, which lets you get an accurate understanding of how individual and group-level covariates affect occupancy rates. Thus, the Bayesian approach measures uncertainty by giving a full probabilistic account of all unknowns. 
@@ -181,7 +194,6 @@ toronto_shelters_data_first_model_rstanarm <-
   readRDS(file = here::here("models/shelters_data_model_one_rstanarm.rds"))
 ```
 
-<<<<<<< HEAD
 \newpage
 
 The stacked bar graph (@fig-programs) provides a detailed breakdown of room occupancy within Toronto's shelter system, comparing emergency and transitional program usage across different sectors and cities. The data reveals a pronounced reliance on emergency shelters, with Toronto showing the highest occupancy rates, particularly for men and mixed adults. In contrast, transitional shelters are utilized less, though they play a critical role for youth and women in Toronto.This difference in shelter usage indicates a urgent need for targeted policies to support sustainable housing and services. Such policies should aim to decrease the heavy reliance on immediate, short-term shelters and enhance the use of transitional shelters that support the progression toward stable, long-term accommodation.
@@ -208,8 +220,6 @@ toronto_shelters_clean |>
 
 The scatter plot(@fig-models) illustrates the relationship between the occupancy rate of rooms and the actual room capacity in Toronto's shelters. Each point represents a data pairing of these two variables, showing a positive trend: as the occupancy rate increases, the actual capacity used also tends to increase. The red line indicates the average trend, cutting through the data to demonstrate the general direction of this relationship. This graph indicats that as more people use the shelters, the actual number of rooms occupied goes up, which could strain the shelter system. The analysis underscores the importance of using predictive models to inform policy decisions and resource allocation, ensuring that the shelter system can accommodate the needs of Toronto's homeless population effectively.
 
-=======
->>>>>>> 46db0260dcc5d29aad59526ce3e9dcbc32b72567
 ```{r}
 #| label: fig-models
 #| fig-cap: "The relationship between the occupancy rate and actual room occupied."  
@@ -254,11 +264,8 @@ The table (@tbl-modelresults) presents a statistical model summarizing the facto
 modelsummary(toronto_shelters_data_first_model_rstanarm)
 ```
 
-<<<<<<< HEAD
 Our findings point to the critical need for policy makers and shelter administrators to implement targeted interventions that address the specific needs of Toronto's homeless population. The evidence supports the call for an expansion of shelter capacity and the development of comprehensive long-term housing strategies. These actions are imperative to ensure that the shelter system can adequately respond to the demands of a diverse and growing homeless population, paving the way for more sustainable and inclusive solutions to homelessness in Toronto and beyond.
 
-=======
->>>>>>> 46db0260dcc5d29aad59526ce3e9dcbc32b72567
 
 # Discussion
 
@@ -297,7 +304,55 @@ The study of Toronto's shelter usage in 2022 provides critical insights into the
 
 \newpage
 
+\appendix
 
+# Appendix {-}
+
+# Model details {#sec-model-details}
+
+## Posterior predictive check
+
+we implement a posterior predictive check. This shows...
+we compare the posterior with the prior. This shows... 
+
+```{r}
+#| eval: true
+#| echo: false
+#| message: false
+#| warning: false
+#| label: fig-ppcheckandposteriorvsprior
+#| layout-ncol: 2
+#| fig-cap: "Examining how the model fits, and is affected by, the data"
+
+pp_check(toronto_shelters_data_first_model_rstanarm) +
+  theme_classic() +
+  theme(legend.position = "bottom")
+```
+
+## Diagnostics
+
+is a trace plot. It shows... This suggests...
+
+is a Rhat plot. It shows... This suggests...
+
+```{r}
+#| echo: false
+#| eval: true
+#| message: false
+#| warning: false
+#| label: fig-stanareyouokay
+#| fig-cap: "Checking the convergence of the MCMC algorithm"
+#| fig-subcap: ["Trace plot", "Rhat plot"]
+#| layout-ncol: 2
+
+plot(toronto_shelters_data_first_model_rstanarm, "trace")
+
+plot(toronto_shelters_data_first_model_rstanarm, "rhat")
+```
+
+
+
+\newpage
 # References
 
 
