@@ -5,7 +5,7 @@ author:
   - Sinan Ma 
   - Che-Yu Wang
 thanks: "Code and data are available at: https://github.com/Sinanma/shelter_in_Toronto."
-date: 12 March, 2024
+date: today
 date-format: long
 abstract: "The study examines the impact of the COVID-19 pandemic and government policies on Toronto's shelter system in 2022. It analyzes the system's response to external pressures using a dataset that includes shelter occupancy rates, service user counts, and capacity metrics. The findings show significant fluctuations in shelter demand and occupancy, highlighting both the system's resilience and vulnerabilities. The study also offers policymakers valuable insights into how to strengthen support for homeless populations in the face of future challenges. Despite temporary emergency shelters and a plan to transition to permanent affordable housing, the shelter system was under pressure from the pandemic, opioid crisis, and an increase in refugee claimants. The analysis offers useful insights for policymakers looking to improve support for homeless people."
 format: pdf
